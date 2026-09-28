@@ -118,3 +118,4 @@ sparklearn/
 3. Add environment variables in Vercel dashboard
 4. Set `prisma migrate deploy` as a release step
 5. Configure Sentry for error monitoring
+<!-- Trigger Vercel Build -->
