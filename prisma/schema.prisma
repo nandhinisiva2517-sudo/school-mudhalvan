@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  STAFF
+  STUDENT
+}
+
+enum Standard {
+  S1
+  S2
+  S3
+  S4
+  S5
+  S6
+  S7
+  S8
+  S9
+  S10
+  S11
+  S12
+}
+
+enum ContentType {
+  ACTIVITY_LINK
+  THEORY
+  INTERACTIVE
+  ADVANCED_LAB
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  passwordHash  String
+  role          Role
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  staffProfile   Staff?
+  studentProfile Student?
+}
+
+model Staff {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  affiliateCode   String    @unique
+  institutionName String?
+  students        Student[]
+  auditLogs       AuditLog[]
+  createdAt       DateTime  @default(now())
+}
+
+model Student {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id])
+  standard      Standard
+  schoolId      String
+  school        School    @relation(fields: [schoolId], references: [id])
+  staffId       String
+  staff         Staff     @relation(fields: [staffId], references: [id])
+  guardianEmail String?
+  consentAt     DateTime?
+  progress      Progress[]
+  createdAt     DateTime  @default(now())
+
+  @@index([staffId])
+  @@index([standard])
+}
+
+model School {
+  id       String    @id @default(cuid())
+  name     String
+  district String
+  state    String    @default("Tamil Nadu")
+  students Student[]
+
+  @@index([district])
+}
+
+model Module {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  summary     String?     // Rich markdown/plain text summary shown in dashboard
+  youtubeUrl  String?     // Embedded YouTube video link
+  quizJson    String?     // JSON array of quiz questions
+  standard    Standard
+  contentType ContentType
+  externalUrl String?
+  order       Int
+  tasks       Task[]
+
+  @@index([standard])
+}
+
+model Task {
+  id       String     @id @default(cuid())
+  moduleId String
+  module   Module     @relation(fields: [moduleId], references: [id])
+  title    String
+  points   Int        @default(10)
+  progress Progress[]
+}
+
+model Progress {
+  id          String    @id @default(cuid())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id])
+  taskId      String
+  task        Task      @relation(fields: [taskId], references: [id])
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  score       Int?
+
+  @@unique([studentId, taskId])
+  @@index([studentId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  staffId   String
+  staff     Staff    @relation(fields: [staffId], references: [id])
+  action    String
+  metadata  String?
+  createdAt DateTime @default(now())
+
+  @@index([staffId])
+}

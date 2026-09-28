@@ -1,0 +1,153 @@
+/* SparkLearn Design Tokens */
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Baloo+Thambi+2:wght@400;500;600;700;800&family=Figtree:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* Color tokens */
+  --spark-primary: #FF8A3D;
+  --spark-primary-light: #FFB380;
+  --spark-primary-dark: #E06A1A;
+  --spark-secondary: #E8447A;
+  --spark-secondary-light: #F07AA0;
+  --spark-tech: #7C5CFC;
+  --spark-tech-light: #A48FFD;
+  --spark-success: #2FB88B;
+  --spark-success-light: #6BCFB0;
+  --spark-warning: #F59E0B;
+  --spark-bg: #FFF9F0;
+  --spark-bg-card: #FFFCF7;
+  --spark-ink: #33302B;
+  --spark-ink-muted: #7A7670;
+  --spark-border: #EDE8DF;
+  --spark-border-strong: #D4CEC5;
+
+  /* Shadows */
+  --spark-shadow-sm: 0 1px 3px rgba(51,48,43,0.08), 0 1px 2px rgba(51,48,43,0.04);
+  --spark-shadow-md: 0 4px 12px rgba(51,48,43,0.10), 0 2px 4px rgba(51,48,43,0.06);
+  --spark-shadow-lg: 0 10px 30px rgba(51,48,43,0.12), 0 4px 8px rgba(51,48,43,0.06);
+
+  /* Radii */
+  --spark-radius-sm: 8px;
+  --spark-radius-md: 12px;
+  --spark-radius-lg: 20px;
+  --spark-radius-xl: 28px;
+  --spark-radius-full: 9999px;
+
+  /* Spacing */
+  --spark-gap: 1.5rem;
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Global resets */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--spark-bg);
+  color: var(--spark-ink);
+  font-family: "Figtree", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Component classes */
+.spark-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1.5px solid var(--spark-border);
+  border-radius: var(--spark-radius-sm);
+  font-family: "Figtree", sans-serif;
+  font-size: 1rem;
+  color: var(--spark-ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.spark-input:focus {
+  border-color: var(--spark-primary);
+  box-shadow: 0 0 0 3px rgba(255,138,61,0.15);
+}
+.spark-input::placeholder { color: var(--spark-ink-muted); }
+
+.spark-autocomplete-list {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: #fff;
+  border: 1.5px solid var(--spark-border);
+  border-radius: var(--spark-radius-sm);
+  box-shadow: var(--spark-shadow-lg);
+  max-height: 300px;
+  overflow-y: auto;
+  list-style: none;
+}
+.spark-autocomplete-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--spark-ink);
+  transition: background 0.15s;
+}
+.spark-autocomplete-item:hover { background: var(--spark-bg); }
+.spark-muted { color: var(--spark-ink-muted); font-size: 0.8rem; }
+
+/* K-3 Tier grid */
+.spark-k3-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+.spark-k3-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem 1rem;
+  background: var(--spark-bg-card);
+  border: 2px solid var(--spark-border);
+  border-radius: var(--spark-radius-xl);
+  box-shadow: var(--spark-shadow-md);
+  text-decoration: none;
+  color: var(--spark-ink);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 180px;
+}
+.spark-k3-tile:hover { box-shadow: var(--spark-shadow-lg); }
+.spark-k3-icon { width: 72px; height: 72px; object-fit: contain; }
+.spark-k3-label {
+  font-family: "Baloo 2", cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--spark-ink);
+}
+.spark-k3-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 32px; height: 32px;
+  background: var(--spark-success);
+  color: #fff;
+  border-radius: var(--spark-radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(47,184,139,0.4);
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2.5px solid var(--spark-tech);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

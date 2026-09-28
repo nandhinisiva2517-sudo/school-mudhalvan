@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "../styles/tokens.css";
+
+@layer base {
+  html { font-size: 16px; }
+  body { @apply bg-spark-bg text-spark-ink font-figtree; }
+  h1, h2, h3 { @apply font-figtree font-semibold; }
+}
+
+@layer utilities {
+  .spark-gradient-primary {
+    background: linear-gradient(135deg, var(--spark-primary) 0%, var(--spark-secondary) 100%);
+  }
+  .spark-gradient-tech {
+    background: linear-gradient(135deg, var(--spark-tech) 0%, var(--spark-secondary) 100%);
+  }
+  .spark-card {
+    @apply bg-white rounded-2xl border border-spark-border shadow-sm p-6;
+  }
+  .spark-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-all duration-200;
+    background: var(--spark-primary);
+  }
+  .spark-btn-primary:hover {
+    background: var(--spark-primary-dark);
+    box-shadow: var(--spark-shadow-md);
+    transform: translateY(-1px);
+  }
+  .spark-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-200;
+    background: transparent;
+    border: 2px solid var(--spark-primary);
+    color: var(--spark-primary);
+  }
+  .spark-btn-secondary:hover {
+    background: var(--spark-primary);
+    color: #fff;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px 0px var(--spark-primary), 0 0 20px 0px rgba(255,138,61,0.2); }
+    50% { box-shadow: 0 0 25px 5px var(--spark-primary), 0 0 40px 10px rgba(255,138,61,0.4); }
+  }
+  
+  .tech-glow {
+    animation: tech-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes tech-glow {
+    0%, 100% { box-shadow: 0 0 10px 0px var(--spark-tech), 0 0 20px 0px rgba(124,92,252,0.2); }
+    50% { box-shadow: 0 0 25px 5px var(--spark-tech), 0 0 40px 10px rgba(124,92,252,0.4); }
+  }
+}
