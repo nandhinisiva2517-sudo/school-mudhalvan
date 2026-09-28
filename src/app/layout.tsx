@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Figtree, Baloo_2, Baloo_Thambi_2, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "@/components/ui/SessionProvider";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { GlobalNavbar } from "@/components/ui/GlobalNavbar";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-figtree" });
@@ -17,12 +15,11 @@ export const metadata: Metadata = {
   keywords: ["AI education", "Tamil Nadu", "school learning", "Teachable Machine", "Quick Draw", "machine learning"],
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${figtree.variable} ${baloo.variable} ${balooThambi.variable} ${jetbrains.variable}`}>
       <body className="bg-spark-bg text-spark-ink font-figtree antialiased">
-        <SessionProvider session={session}>
+        <SessionProvider session={null}>
           <GlobalNavbar />
           {children}
         </SessionProvider>
